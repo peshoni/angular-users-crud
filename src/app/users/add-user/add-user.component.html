@@ -1,0 +1,75 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="user-card">
+    <mat-card-header>
+      <mat-card-title>Add user data</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <app-simple-string-input
+            [groupRef]="form"
+            [formCName]="'name'"
+            [placeholder]="'Name'"
+            [valido]="valido"
+          >
+          </app-simple-string-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-simple-string-input
+            [groupRef]="form"
+            [formCName]="'family'"
+            [placeholder]="'Family'"
+            [valido]="valido"
+          >
+          </app-simple-string-input>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col form-sector">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Sex" formControlName="sex">
+              <mat-option *ngFor="let sex of genderOptions" [value]="sex.value">
+                {{ sex.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['sex'].hasError('required')">
+              Sex is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-simple-string-input
+            [groupRef]="form"
+            [formCName]="'profession'"
+            [placeholder]="'Profession'"
+            [valido]="valido"
+          >
+          </app-simple-string-input>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="goToUsersList()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

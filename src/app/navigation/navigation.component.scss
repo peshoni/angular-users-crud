@@ -1,0 +1,82 @@
+@use "@angular/material" as mat;
+// Import library functions for theme creation.
+// @import "/src/styles";
+
+.sidenav-container {
+    height: 100%;
+}
+
+.nav-toolbar {
+    width: 100%;
+    // display: flex;
+    // justify-content: end;
+    justify-content: space-between;
+    // align-items: center;
+}
+
+.sidenav {
+    // width: 250px;
+    // margin-top: 80px;
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    top: 64px;
+}
+// .mat-sidenav {
+// 	overflow: auto;
+// 	position: absolute;
+// 	bottom: 0;
+// 	top: 64px;
+// }
+
+.sidenav .mat-toolbar {
+    background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.container {
+    padding: 5px;
+}
+
+a.active {
+    // Use mat-color to extract individual colors from a palette.
+    // background-color: mat.get-color-from-palette(mat.$blue-palette, 600);
+    color: mat.get-color-from-palette(mat.$yellow-palette, 800);
+}
+
+@media screen and (min-width: "600px") {
+    .container {
+        padding: 10px;
+    }
+
+    .fixed-bottom {
+        position: absolute;
+        bottom: 10px;
+    }
+}
+
+@media screen and (max-height: "760px") {
+    .fixed-bottom {
+        position: relative;
+    }
+}
+
+@keyframes spin-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+.custom-button {
+    position: fixed;
+    right: 25px;
+    bottom: 15px;
+}

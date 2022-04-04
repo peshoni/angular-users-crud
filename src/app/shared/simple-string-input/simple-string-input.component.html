@@ -1,0 +1,18 @@
+<div class="form-sector" [formGroup]="groupRef">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      [placeholder]="placeholder"
+      [formControlName]="formCName"
+      type="search"
+    />
+    <mat-error *ngIf="groupRef.controls[formCName].errors">
+      {{
+        valido.getErrorMessageFromControl(
+          groupRef.controls[formCName],
+          extraMessage
+        )
+      }}
+    </mat-error>
+  </mat-form-field>
+</div>
