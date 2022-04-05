@@ -1,0 +1,50 @@
+version: "3.6"
+networks:
+  markovski-app-net:
+    driver: "bridge"
+    ipam:
+      driver: default
+services:
+  postgres:
+    image: postgres:12
+    container_name: markovski_postgress
+    networks:
+      - "markovski-app-net"
+    # hide in prod
+    ports:
+      - "5433:5432"
+    restart: always
+    volumes:
+      - 'E:\angular-users-crud\db_data:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+  graphql-engine:
+    container_name: markovski_hasura
+    image: hasura/graphql-engine:v2.0.0-alpha.5.cli-migrations-v2
+    # volumes:
+    #   - ./migrations
+    #   - ./metadata
+    ports:
+      - "8081:8080"
+    networks:
+      - "markovski-app-net"
+    depends_on:
+      - "postgres"
+    restart: always
+    environment:
+      # HASURA_GRAPHQL_MiGRATTIONS_DIR: migrations
+      # HASURA_GRAPHQL_METADATA_DIR: metadata
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256","key": "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlBlcGUiLCJhZG1pbiI6dHJ1ZSwia"}'
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: iOiJIUzI1NiIsInR5cCeyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlBlcGUiLCJhZG1pbiI6dHJ1ZSwia
+      HASURA_GRAPHQL_INFER_FUNCTION_PERMISSIONS: "false"
+
+      TZ: Europe/Sofia
+volumes:
+  db_data:

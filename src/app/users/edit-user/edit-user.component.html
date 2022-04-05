@@ -27,20 +27,41 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col form-sector">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Sex" formControlName="sex">
-              <mat-option *ngFor="let sex of genderOptions" [value]="sex.value">
-                {{ sex.title }}
+      <div class="row" style="margin-right: 7px !important">
+        <div class="row" style="margin-right: 7px !important">
+          <div class="col form-sector">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Gender" formControlName="gender">
+                <mat-option
+                  *ngFor="let gender of genderOptions"
+                  [value]="gender.value"
+                >
+                  {{ gender.title }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['gender'].errors">
+                {{ valido.getErrorMessageFromControl(form.controls["gender"]) }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-two form-sector">
+          <mat-form-field class="quarter-width">
+            <mat-select placeholder="Age" formControlName="age">
+              <mat-option *ngIf="!form.controls['age'].value" disabled="true"
+                >Please, select</mat-option
+              >
+              <mat-option *ngFor="let age of ageRange" [value]="age">
+                {{ age }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="form.controls['sex'].hasError('required')">
-              Sex is <strong>required</strong>
+            <mat-error *ngIf="form.controls['age'].errors">
+              {{ valido.getErrorMessageFromControl(form.controls["age"]) }}
             </mat-error>
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <app-simple-string-input

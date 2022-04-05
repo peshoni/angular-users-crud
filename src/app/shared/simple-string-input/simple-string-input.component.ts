@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation.service';
 
@@ -7,15 +7,10 @@ import { ValidationService } from 'src/app/services/validation.service';
   templateUrl: './simple-string-input.component.html',
   styleUrls: ['./simple-string-input.component.scss'],
 })
-export class SimpleStringInputComponent implements OnInit {
+export class SimpleStringInputComponent {
   @Input() placeholder!: string;
   @Input() formCName!: string;
   @Input() groupRef!: FormGroup;
   @Input() valido!: ValidationService;
   @Input() extraMessage!: string;
-  constructor() {}
-
-  ngOnInit(): void {
-    console.log(this.formCName);
-  }
 }

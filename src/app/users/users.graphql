@@ -1,0 +1,40 @@
+query GetUsers(
+  $limit: Int
+  $offset: Int
+  $orderBy: [users_order_by!] = { created_at: desc }
+) {
+  users(limit: $limit, offset: $offset, order_by: $orderBy) {
+    ...UserFields
+  }
+  users_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation AddUser($user_insert_input: users_insert_input!) {
+  insert_users_one(object: $user_insert_input) {
+    ...UserFields
+  }
+}
+mutation UpdateUser($id: Int!, $user_set_input: users_set_input!) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: $user_set_input) {
+    ...UserFields
+  }
+}
+mutation DeleteUserByPk($id: Int!) {
+  delete_users_by_pk(id: $id) {
+    ...UserFields
+  }
+}
+
+fragment UserFields on users {
+  id
+  created_at
+  updated_at
+  name
+  family
+  age
+  profession
+}

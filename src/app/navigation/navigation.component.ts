@@ -21,21 +21,9 @@ export class NavigationComponent implements OnInit {
     );
   menus: MarkovskiMenu[] = [
     { route: 'users', label: 'Потребители', matIcon: 'groups' },
-    {
-      route: 'users/add-user',
-      label: 'Добавяне на потребител',
-      matIcon: 'add',
-    },
-    {
-      route: 'users/edit-user',
-      label: 'редактиране на потребител',
-      matIcon: 'edit',
-    },
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit(): void {
-    // console.log(this.menus);
-  }
+  ngOnInit(): void {}
 }

@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
@@ -33,6 +34,7 @@ import { UsersRoutingModule } from './users-routing.module';
     CommonModule,
     SharedModule,
     UsersRoutingModule,
+    RouterModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

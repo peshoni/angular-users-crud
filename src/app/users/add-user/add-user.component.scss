@@ -5,6 +5,9 @@
 .full-width {
   width: 100%;
 }
+.quarter-width {
+  width: 25%;
+}
 
 .row {
   display: flex;
@@ -15,7 +18,15 @@
   flex: 1;
   margin-right: 20px;
 }
+.col-two {
+  flex: 1 0;
+  margin-right: 20px;
+}
 
 .col:last-child {
   margin-right: 0;
+}
+
+.form-dropdown {
+  margin-right: 7px !important;
 }
