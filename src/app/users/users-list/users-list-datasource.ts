@@ -19,6 +19,7 @@ export class UsersListDataSource extends DataSource<Users> {
   queryRef: QueryRef<GetUsersQuery>;
   loading: BehaviorSubject<any> = new BehaviorSubject(true);
   loading$ = this.loading.asObservable();
+  refresh: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private usersService: UsersService) {
     super();
@@ -36,13 +37,13 @@ export class UsersListDataSource extends DataSource<Users> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     this.queryRef = this.usersService.getUsers(limit, offset, order_by);
-    const dataMutations = [this.paginator.page, this.sort.sortChange];
-
-    return merge(
+    const dataMutations = [
       this.paginator.page,
       this.sort.sortChange,
-      ...dataMutations
-    ).pipe(
+      this.refresh,
+    ];
+
+    return merge(...dataMutations).pipe(
       startWith({}),
       tap(() => this.loading.next(true)),
       switchMap((fromWhere) => {
@@ -70,27 +71,23 @@ export class UsersListDataSource extends DataSource<Users> {
         this.loading.next(loading);
         if (errors) {
           console.log(errors);
-          console.log(data);
           const errorMessage = errors[0].message;
           console.log(errorMessage);
           if (errorMessage.includes('query_root')) {
             // this.snackBar.open(
-            //   'Нямате необходимите права за достъп до тези данни!',
+            //   'You do not have the necessary permissions to access this data!',
             //   'OK',
             //   { duration: 2000 }
             // );
           }
-          // this.snackBar.open(error, 'OK', { duration: 2000 });
           throw Error(errorMessage);
         }
-        console.log(data);
         this.loading.next(false);
         this.counter.next(data.users_aggregate.aggregate.count);
         return data.users;
       })
     );
   }
-
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.

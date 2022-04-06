@@ -94,9 +94,9 @@ body {
     color: black !important;
 }
 
-.mat-select-disabled .mat-select-value {
-    color: black !important;
-}
+// .mat-select-disabled .mat-select-value {
+//     color: black !important;
+// }
 
 .mat-dialog-content {
     overflow: auto;
@@ -127,6 +127,7 @@ body {
         font-size: initial;
         font-weight: 700;
         text-align: center !important;
+        border: solid 0.1px mat.get-color-from-palette(mat.$gray-palette, 300);
     }
     .mat-option.mat-selected:hover:not([disabled]),
     .mat-option:hover:not([disabled]) {
@@ -135,5 +136,28 @@ body {
         font-weight: 900;
         text-align: center;
         color: black !important;
+    }
+}
+
+// snackBar pannel classes
+.success-snackbar {
+    background-color: #a5d6a7;
+    color: #000000;
+    .mat-button-wrapper {
+        color: #000000;
+    }
+}
+.warn-snackbar {
+    background-color: #ffd54f;
+    color: #000000;
+    .mat-button-wrapper {
+        color: #000000;
+    }
+}
+.error-snackbar {
+    background-color: #ffab91;
+    color: #000000;
+    .mat-button-wrapper {
+        color: #000000;
     }
 }

@@ -36,5 +36,6 @@ fragment UserFields on users {
   name
   family
   age
+  gender
   profession
 }

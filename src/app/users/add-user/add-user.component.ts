@@ -14,13 +14,20 @@ export class AddUserComponent extends UserBaseComponent {
   }
 
   onSubmit(): void {
+    if (this.form.invalid) {
+      this.valido.validateAllFormFields(this.form);
+      return;
+    }
     const formData = this.form.getRawValue();
-    // TODO add gender
-    delete formData.gender;
     this.userService
       .addUser(formData as Users_Insert_Input)
-      .subscribe((response) => {
-        console.log(response);
+      .subscribe(({ data, errors }) => {
+        if (errors) {
+          this.notifyUser('error', 'Something went wrong. Please excuse us.');
+        } else if (data) {
+          this.notifyUser('success', 'The data was added succesfully.');
+        }
+        this.goToUsersList();
       });
   }
 }

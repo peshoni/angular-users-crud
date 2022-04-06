@@ -51,35 +51,24 @@ export class ValidationService {
     } else if (control.hasError('max')) {
       return 'Maximum value: ' + control.errors.max.max;
     } else if (control.errors) {
-      // describe next error here
+      // describe next missing error message here
       console.log(control.errors);
       return 'error';
     }
     return '';
   }
 
-  validateText(min: number, max: number, required: boolean): ValidatorFn[] {
-    const compose = [Validators.minLength(min), Validators.maxLength(max)];
-    if (required) {
-      compose.push(Validators.required);
-    }
-    return compose;
-  }
-
-  validateNumber(min: number, max: number): ValidatorFn[] {
+  getValidatorFnForNames(): ValidatorFn[] {
     return [
       Validators.required,
-      Validators.min(min),
-      Validators.max(max),
-      Validators.pattern('[0-9]+'), // validates input is digit
+      Validators.pattern('[a-zA-Z ?]+'), // for `Ivan` or `Ana Maria`
     ];
   }
 
-  validateNumberDigits(min: number, digits: number): ValidatorFn[] {
+  getValidatorFnForProffesion(): ValidatorFn[] {
     return [
       Validators.required,
-      Validators.min(min),
-      Validators.pattern('[0-9]*[.,]?[0-9]{1,' + digits + '}'), // validates input is digit
+      Validators.pattern('[a-zA-Z-?]+'), // for `programmer-analyst` or `driver`
     ];
   }
 
@@ -95,17 +84,6 @@ export class ValidationService {
       } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
-    });
-  }
-
-  /**
-   * Disables passed form controls if we need ReadOnly mode. On Submit should use getRawValue() method
-   * @param formGroup  The group
-   * @param names names of control
-   */
-  disableFormControlsByName(formGroup: FormGroup, ...names: string[]): void {
-    names.forEach((element) => {
-      formGroup.controls[element]?.disable();
     });
   }
 }

@@ -1,1 +1,26 @@
-<p>confirm-dialog works!</p>
+<h1 mat-dialog-title>{{ data.dialogData.label }}</h1>
+<div mat-dialog-content class="dialog-content">
+  <div
+    *ngIf="data.dialogData.message"
+    class="message-content"
+    [innerHtml]="data.dialogData.message"
+  ></div>
+</div>
+<div mat-dialog-actions align="end">
+  <button
+    *ngIf="firstButtonVisible"
+    mat-button
+    (click)="onNoClick()"
+    cdkFocusInitial
+  >
+    {{ cancelButtonLabel }}
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="onYesClick()"
+    style="margin-left: 5px"
+  >
+    {{ okButtonLabel }}
+  </button>
+</div>

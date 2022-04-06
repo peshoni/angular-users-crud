@@ -1,9 +1,13 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
+import { ConfirmDialogComponent } from 'src/app/dialogues/confirm-dialog/confirm-dialog.component';
 import { BundleService } from 'src/app/services/bundle.service';
+import { MessagesService } from 'src/app/services/mesages.service';
 import { Users } from 'src/generated/graphql';
 import { UsersService } from '../users.service';
 import { UsersListDataSource } from './users-list-datasource';
@@ -18,20 +22,24 @@ export class UsersListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Users>;
   dataSource: UsersListDataSource;
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = [
     'id',
     'created_at',
     'updated_at',
     'name',
     'family',
+    'age',
+    'gender',
+    'profession',
     'actions',
   ];
 
   constructor(
-    private usersService: UsersService,
     private router: Router,
-    private bundle: BundleService
+    private dialog: MatDialog,
+    private usersService: UsersService,
+    private bundle: BundleService,
+    private messagesService: MessagesService
   ) {
     this.dataSource = new UsersListDataSource(usersService);
   }
@@ -46,20 +54,44 @@ export class UsersListComponent implements AfterViewInit {
   }
 
   editUser(user: Users) {
-    console.log('EDIT');
-    console.log(user);
     this.bundle.setUser(user);
     this.router.navigate(['users', 'edit-user']);
-    // this.router.navigateByUrl('users/edit-user');
   }
 
   deleteUser(user: Users) {
-    console.log('DELETE');
-    console.log(user);
-    this.usersService.deleteUserByPk(user.id).subscribe((response) => {
-      console.log(response);
-      console.log('NAVIGATE');
-      this.router.navigateByUrl('users');
+    this.askUserForConfirmation().subscribe((userResponse) => {
+      if (userResponse && userResponse.result === 'ok') {
+        this.usersService
+          .deleteUserByPk(user.id)
+          .subscribe(({ errors, data }) => {
+            if (errors) {
+              this.messagesService.notifyUser(
+                'error',
+                'Something went wrong. Please excuse us.'
+              );
+            } else if (data) {
+              this.messagesService.notifyUser(
+                'success',
+                'The data was deleted succesfully.'
+              );
+              this.dataSource.paginator.pageIndex = 0;
+              this.dataSource.refresh.next(true);
+            }
+          });
+      } else {
+        // do nothing
+      }
     });
+  }
+  private askUserForConfirmation() {
+    const dialogData: any = {
+      label: 'User data is about to be deleted',
+      message: 'Are you sure ?',
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: 'auto',
+      data: { dialogData },
+    });
+    return dialogRef.afterClosed().pipe(take(1));
   }
 }
