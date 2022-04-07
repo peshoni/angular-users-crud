@@ -7,7 +7,6 @@ const routes: Routes = [
     path: '',
     component: NavigationComponent,
     children: [
-      // { path: '', redirectTo: 'users', pathMatch: 'full' },
       {
         path: 'users',
         loadChildren: () =>

@@ -4,7 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { QueryRef } from 'apollo-angular';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
-import { GetUsersQuery, Users, Users_Order_By } from 'src/generated/graphql';
+import {
+  GetUsersQuery,
+  Order_By,
+  Users,
+  Users_Order_By,
+} from 'src/generated/graphql';
 import { UsersService } from '../users.service';
 
 /**
@@ -33,7 +38,7 @@ export class UsersListDataSource extends DataSource<Users> {
   connect(): Observable<Users[] | any> {
     const limit: number = this.paginator.pageSize;
     const offset: number = this.paginator.pageIndex * this.paginator.pageSize;
-    const order_by: Users_Order_By = {}; // { name: Order_By.Asc };
+    const order_by: Users_Order_By = { id: Order_By.Asc }; // { name: Order_By.Asc };
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     this.queryRef = this.usersService.getUsers(limit, offset, order_by);
@@ -70,15 +75,10 @@ export class UsersListDataSource extends DataSource<Users> {
       map(({ data, loading, errors }) => {
         this.loading.next(loading);
         if (errors) {
-          console.log(errors);
           const errorMessage = errors[0].message;
           console.log(errorMessage);
           if (errorMessage.includes('query_root')) {
-            // this.snackBar.open(
-            //   'You do not have the necessary permissions to access this data!',
-            //   'OK',
-            //   { duration: 2000 }
-            // );
+            //   'You do not have the necessary permissions to access this data!'
           }
           throw Error(errorMessage);
         }

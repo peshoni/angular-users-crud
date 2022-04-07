@@ -27,8 +27,8 @@ export class UserBaseComponent {
     { title: 'Male', value: 'male' },
     { title: 'Female', value: 'female' },
   ];
-
   ageRange: number[] = [];
+
   constructor(injector: Injector) {
     this.fb = injector.get(FormBuilder);
     this.router = injector.get(Router);

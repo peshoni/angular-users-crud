@@ -10,7 +10,7 @@ interface HashTable<T> {
   [key: string]: string;
 }
 /**
- * This class must be injected as a public property to be visible to the template
+ * This class must be injected as a public property into constructor to be visible to the template
  */
 @Injectable()
 export class ValidationService {
@@ -44,7 +44,6 @@ export class ValidationService {
     } else if (control.hasError('pattern')) {
       return 'Invalid format. ' + patternMessage;
     } else if (control.hasError('min')) {
-      console.log(control.errors.min);
       return 'Minimum value: ' + control.errors.min.min;
     } else if (control.hasError('exist')) {
       return 'Already exist in database';

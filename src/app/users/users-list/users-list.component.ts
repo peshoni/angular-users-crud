@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,19 +23,10 @@ export class UsersListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Users>;
   dataSource: UsersListDataSource;
-  displayedColumns = [
-    'id',
-    'created_at',
-    'updated_at',
-    'name',
-    'family',
-    'age',
-    'gender',
-    'profession',
-    'actions',
-  ];
+  displayedColumns = this.getDefaultColumns();
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private router: Router,
     private dialog: MatDialog,
     private usersService: UsersService,
@@ -42,8 +34,35 @@ export class UsersListComponent implements AfterViewInit {
     private messagesService: MessagesService
   ) {
     this.dataSource = new UsersListDataSource(usersService);
+    this.attachbreakpointObserver();
+  }
+  getDefaultColumns() {
+    return [
+      'id',
+      'created_at',
+      'updated_at',
+      'name',
+      'family',
+      'age',
+      'gender',
+      'profession',
+      'actions',
+    ];
   }
 
+  attachbreakpointObserver(): void {
+    this.breakpointObserver
+      .observe(Breakpoints.Handset)
+      .subscribe(({ matches }) => {
+        if (matches) {
+          this.displayedColumns = this.getDefaultColumns().filter(
+            (c) => c !== 'created_at' && c !== 'updated_at'
+          );
+        } else {
+          this.displayedColumns = this.getDefaultColumns();
+        }
+      });
+  }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

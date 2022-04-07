@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { isNullOrUndefined } from 'is-what';
 import { BundleService } from 'src/app/services/bundle.service';
 import { Users, Users_Set_Input } from 'src/generated/graphql';
 import { ImageSnippet } from '../image-snippet.class';
@@ -75,8 +76,9 @@ export class EditUserComponent extends UserBaseComponent implements OnInit {
     }
     const formData = this.form.getRawValue();
     if (this.imageSnippet) {
-      console.log('We have new image');
       formData.image = this.imageSnippet.src;
+    } else if (isNullOrUndefined(this.sanitizedImage)) {
+      formData.image = null;
     } else {
       formData.image = this.user.image;
     }
@@ -95,7 +97,7 @@ export class EditUserComponent extends UserBaseComponent implements OnInit {
         if (errors) {
           this.notifyUser('error', 'Something went wrong. Please excuse us.');
         } else if (data) {
-          this.notifyUser('success', 'The data was added succesfully.');
+          this.notifyUser('success', 'The data was updated succesfully.');
         }
         this.goToUsersList();
       });
