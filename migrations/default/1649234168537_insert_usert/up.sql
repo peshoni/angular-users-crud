@@ -1,4 +1,4 @@
-INSERT INTO PUBLIC.users ("name", "family", "profession","gender","age") VALUES
+INSERT INTO PUBLIC.users ("name", "family", "gender","profession","age") VALUES
 ('Ivan', 'Vladimirov', 'male', 'driver',35 ), 
 ('Maria', 'Nikolova', 'female', 'web developer',35),
 ('Dragan', 'Krasimirov', 'male', 'crane operator', 47),

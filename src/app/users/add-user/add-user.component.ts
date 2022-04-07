@@ -1,5 +1,13 @@
-import { Component, Injector, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injector,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Users_Insert_Input } from 'src/generated/graphql';
+import { ImageSnippet } from '../image-snippet.class';
 import { UserBaseComponent } from '../user-base/user-base.component';
 
 @Component({
@@ -9,8 +17,31 @@ import { UserBaseComponent } from '../user-base/user-base.component';
   styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent extends UserBaseComponent {
-  constructor(injector: Injector) {
+  @ViewChild('imageInput') imageInput: ElementRef;
+  imageSnippet: ImageSnippet;
+
+  constructor(injector: Injector, private sanitizer: DomSanitizer) {
     super(injector);
+  }
+
+  /**
+   * Adds user images.
+   * @param imageInput
+   */
+  addFile(imageInput: HTMLInputElement) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', (event: any) => {
+      this.imageSnippet = new ImageSnippet();
+      this.imageSnippet.src = event.target.result;
+      this.imageSnippet.file = file;
+    });
+    reader.readAsDataURL(file);
+  }
+
+  removeImage() {
+    this.imageSnippet = new ImageSnippet();
+    this.imageInput.nativeElement.value = '';
   }
 
   onSubmit(): void {
@@ -19,6 +50,10 @@ export class AddUserComponent extends UserBaseComponent {
       return;
     }
     const formData = this.form.getRawValue();
+    if (this.imageSnippet) {
+      formData.image = this.imageSnippet.src;
+    }
+
     this.userService
       .addUser(formData as Users_Insert_Input)
       .subscribe(({ data, errors }) => {
@@ -29,5 +64,6 @@ export class AddUserComponent extends UserBaseComponent {
         }
         this.goToUsersList();
       });
+    return;
   }
 }

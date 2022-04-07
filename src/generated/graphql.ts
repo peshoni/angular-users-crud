@@ -231,6 +231,7 @@ export type Users = {
   family: Scalars['String'];
   gender: Scalars['String'];
   id: Scalars['Int'];
+  image?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   profession: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -283,6 +284,7 @@ export type Users_Bool_Exp = {
   family?: Maybe<String_Comparison_Exp>;
   gender?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  image?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   profession?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -307,6 +309,7 @@ export type Users_Insert_Input = {
   family?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profession?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -320,6 +323,7 @@ export type Users_Max_Fields = {
   family?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profession?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -333,6 +337,7 @@ export type Users_Min_Fields = {
   family?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profession?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -361,6 +366,7 @@ export type Users_Order_By = {
   family?: Maybe<Order_By>;
   gender?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   profession?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -384,6 +390,8 @@ export enum Users_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Image = 'image',
+  /** column name */
   Name = 'name',
   /** column name */
   Profession = 'profession',
@@ -398,6 +406,7 @@ export type Users_Set_Input = {
   family?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profession?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -443,6 +452,8 @@ export enum Users_Update_Column {
   Gender = 'gender',
   /** column name */
   Id = 'id',
+  /** column name */
+  Image = 'image',
   /** column name */
   Name = 'name',
   /** column name */
@@ -535,7 +546,7 @@ export type DeleteUserByPkMutation = (
 
 export type UserFieldsFragment = (
   { __typename?: 'users' }
-  & Pick<Users, 'id' | 'created_at' | 'updated_at' | 'name' | 'family' | 'age' | 'gender' | 'profession'>
+  & Pick<Users, 'id' | 'created_at' | 'updated_at' | 'name' | 'family' | 'age' | 'gender' | 'profession' | 'image'>
 );
 
 export const UserFieldsFragmentDoc = gql`
@@ -548,6 +559,7 @@ export const UserFieldsFragmentDoc = gql`
   age
   gender
   profession
+  image
 }
     `;
 export const GetUsersDocument = gql`

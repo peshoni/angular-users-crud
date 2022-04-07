@@ -20,7 +20,7 @@ export class NavigationComponent implements OnInit {
       shareReplay()
     );
   menus: MarkovskiMenu[] = [
-    { route: 'users', label: 'Потребители', matIcon: 'groups' },
+    { route: 'users', label: 'users', matIcon: 'groups' },
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}

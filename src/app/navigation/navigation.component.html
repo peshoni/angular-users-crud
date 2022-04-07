@@ -7,7 +7,7 @@
     [opened]="(isHandset$ | async) === false"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
   >
-    <mat-toolbar>Меню</mat-toolbar>
+    <mat-toolbar>menu</mat-toolbar>
     <mat-nav-list>
       <div *ngFor="let menu of menus">
         <a

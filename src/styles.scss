@@ -16,10 +16,10 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$frontend-primary: mat.define-palette(mat.$blue-palette, 800);
-$frontend-accent: mat.define-palette(mat.$yellow-palette, 600);
+$frontend-primary: mat.define-palette(mat.$teal-palette, 400);
+$frontend-accent: mat.define-palette(mat.$orange-palette, 400);
 // The warn palette is optional (defaults to red).
-$frontend-warn: mat.define-palette(mat.$red-palette, 400);
+$frontend-warn: mat.define-palette(mat.$deep-orange-palette, 900);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -41,7 +41,6 @@ $frontend-theme: mat.define-light-theme(
 /* You can add global styles to this file, and also import other style files */
 $primary: mat-color($frontend-primary);
 $warn: mat-color($frontend-warn);
-
 $accent: mat.get-color-from-palette($frontend-theme, accent);
 /* You can add global styles to this file, and also import other style files */
 
@@ -94,10 +93,6 @@ body {
     color: black !important;
 }
 
-// .mat-select-disabled .mat-select-value {
-//     color: black !important;
-// }
-
 .mat-dialog-content {
     overflow: auto;
 }
@@ -127,7 +122,7 @@ body {
         font-size: initial;
         font-weight: 700;
         text-align: center !important;
-        border: solid 0.1px mat.get-color-from-palette(mat.$gray-palette, 300);
+        border: solid 0.5px mat.get-color-from-palette(mat.$gray-palette, 300);
     }
     .mat-option.mat-selected:hover:not([disabled]),
     .mat-option:hover:not([disabled]) {
@@ -159,5 +154,72 @@ body {
     color: #000000;
     .mat-button-wrapper {
         color: #000000;
+    }
+}
+
+// Image input
+
+.image-bar {
+    width: 100%;
+    display: contents;
+    .image-field {
+        height: 100%;
+        width: 100%;
+        margin: 1px;
+        padding: 5px;
+        box-sizing: border-box;
+        // background-color: rgb(249, 250, 255);
+        border: solid 0.5px mat.get-color-from-palette(mat.$gray-palette, 300);
+        border-radius: 1px;
+    }
+
+    .img-preview-container {
+        // background-color: rgb(249, 250, 255);
+        // background-color: rgb(237, 238, 252);
+        position: relative;
+        cursor: pointer;
+        width: auto;
+    }
+}
+// Form rows and cols
+.user-card {
+    min-width: 120px;
+    margin: 20px auto;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.root-row {
+    display: flex;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.col:last-child {
+    margin-right: 0;
+}
+
+.form-dropdown {
+    margin-right: 7px !important;
+}
+
+@media screen and (max-width: 1024px) {
+    .root-row {
+        display: contents;
+    }
+    .row {
+        display: contents;
+    }
+    .col {
+        flex: 1;
     }
 }

@@ -68,7 +68,7 @@ export class ValidationService {
   getValidatorFnForProffesion(): ValidatorFn[] {
     return [
       Validators.required,
-      Validators.pattern('[a-zA-Z-?]+'), // for `programmer-analyst` or `driver`
+      Validators.pattern('[a-zA-Z- ]+'), // for `programmer-analyst` or `driver`
     ];
   }
 
