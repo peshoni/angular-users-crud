@@ -5,6 +5,15 @@ networks:
     ipam:
       driver: default
 services:
+  ###
+  markovski-frontend:
+    container_name: users-crud
+    image: pesho02/users-crud:latest
+    networks:
+      - "markovski-app-net"
+    ports:
+      - "4200:80"
+  ###
   postgres:
     image: postgres:12
     container_name: markovski_postgress
@@ -18,12 +27,10 @@ services:
     #   - 'E:\angular-users-crud\db_data:/var/lib/postgresql/data'
     environment:
       POSTGRES_PASSWORD: postgrespassword
+  ###
   graphql-engine:
     container_name: markovski_hasura
     image: hasura/graphql-engine:v2.0.0-alpha.5.cli-migrations-v2
-    volumes:
-      - ./migrations:/migrations
-      - ./metadata:/metadata
     ports:
       - "8081:8080"
     networks:
@@ -32,8 +39,8 @@ services:
       - "postgres"
     restart: always
     environment:
-      # HASURA_GRAPHQL_MiGRATTIONS_DIR: metadata_directory
-      # HASURA_GRAPHQL_METADATA_DIR: migrations_directory
+      # HASURA_GRAPHQL_MiGRATTIONS_DIR: /metadata
+      # HASURA_GRAPHQL_METADATA_DIR: /migrations
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
@@ -44,7 +51,6 @@ services:
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: iOiJIUzI1NiIsInR5cCeyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlBlcGUiLCJhZG1pbiI6dHJ1ZSwia
       HASURA_GRAPHQL_INFER_FUNCTION_PERMISSIONS: "false"
-
       TZ: Europe/Sofia
 volumes:
   db_data:
